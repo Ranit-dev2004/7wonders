@@ -1,0 +1,160 @@
+body {
+  margin: 0;
+  display: flex;
+  height: 100vh;
+  font-family: 'Courier New', monospace;
+  color: #00ff99;
+  background: radial-gradient(circle at center, #010101 0%, #000 70%, #001a12 100%);
+  overflow: hidden;
+}
+
+/* PARTICLE CANVAS */
+#particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* LEFT PANEL */
+.left-panel {
+  width: 40%;
+  background: radial-gradient(circle at top left, #111 0%, #000 70%);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.left-panel img {
+  position: absolute;
+  opacity: 0.25;
+  width: 220px;
+  filter:
+    drop-shadow(0 0 4px #004d33)
+    drop-shadow(0 0 8px rgba(0, 255, 153, 0.2))
+    brightness(0.9)
+    contrast(1.1);
+  animation: float 6s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+#globe { top: 5%; left: 25%; animation-delay: 0s; }
+#gear { top: 40%; left: 15%; animation-delay: 2s; }
+#compass { top: 65%; left: 25%; animation-delay: 4s; }
+
+.left-panel img:hover {
+  opacity: 0.35;
+  transform: scale(1.05);
+  filter:
+    drop-shadow(0 0 6px #00ff99)
+    drop-shadow(0 0 10px rgba(0, 255, 153, 0.4));
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+/* LEFT TEXT */
+.left-text {
+  position: absolute;
+  bottom: 8%;
+  left: 10%;
+  width: 80%;
+  color: #00ff99;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.8;
+  animation: fadeText 10s ease-in-out infinite;
+  text-shadow: 0 0 6px #004d33, 0 0 12px rgba(0,255,153,0.3);
+}
+
+@keyframes fadeText {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 0.4; }
+}
+/* ADD STYLES FOR THE IMAGE DISPLAY CONTAINER */
+/* ADD/UPDATE STYLES FOR THE IMAGE DISPLAY CONTAINER */
+#wonderImage {
+    /* KEY CHANGE 1: Remove it completely from the layout flow by default */
+    display: none; 
+    
+    /* These styles will be applied when JS changes display to 'flex' */
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    
+    border: 1px solid #004d33; /* Glow border */
+    box-shadow: 0 0 10px #00ff99, inset 0 0 10px #00ff99;
+    background-color: #030303;
+    overflow: hidden;
+    opacity: 0; 
+    transform: scale(0.9);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out; 
+}
+
+.wonder-display-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    /* Apply a subtle color filter to blend with the terminal theme */
+    filter:
+        grayscale(50%)
+        contrast(1.2)
+        sepia(0.5)
+        hue-rotate(150deg)
+        drop-shadow(0 0 4px #00ff99);
+}
+
+/* ... (Rest of your existing CSS) ... */
+/* RIGHT PANEL TERMINAL */
+.right-panel {
+  width: 60%;
+  background: transparent;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  z-index: 2;
+}
+
+.terminal {
+  width: 100%;
+  height: 100%;
+  text-shadow: 0 0 8px #00ff99, 0 0 20px #003322;
+}
+
+#output {
+  white-space: pre-wrap;
+  line-height: 1.5;
+  font-size: 1em;
+}
+
+#input-line {
+  display: flex;
+  align-items: center;
+}
+
+#prompt {
+  margin-right: 8px;
+}
+
+#commandInput {
+  background: transparent;
+  border: none;
+  color: #00ff99;
+  font-family: inherit;
+  font-size: 1em;
+  outline: none;
+  width: 80%;
+}
+
+.blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
