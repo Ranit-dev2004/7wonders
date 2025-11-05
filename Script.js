@@ -158,6 +158,7 @@ function runCommand() {
   output.scrollTop = output.scrollHeight;
 }
 
+// --- Enter key handler ---
 input.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.keyCode === 13) {
     e.preventDefault();
@@ -165,7 +166,10 @@ input.addEventListener('keydown', (e) => {
   }
 });
 
-input.addEventListener('change', runCommand);
+// --- Fallback for mobile ---
+input.addEventListener('keyup', (e) => {
+  if (e.key === 'Enter') runCommand();
+});
 
 const leftText = document.querySelector('.left-text');
 const lines = [
