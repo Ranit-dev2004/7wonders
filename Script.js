@@ -1,10 +1,7 @@
-// === TERMINAL COMMANDS ===
 const output = document.getElementById('output');
 const input = document.getElementById('commandInput');
-// New Line: Get the image container element
 const wonderImageContainer = document.getElementById('wonderImage');
 
-// --- WONDER DATA ---
 const wonders = {
   greatwall: ` **The Great Wall of China**
 ────────────────────────────
@@ -115,55 +112,60 @@ Type any name above to explore that wonder.`
 };
 
 const wonderImages = {
-    greatwall: 'great-wall-of-china-historic-great-wall-of-china-X7DgSZKx.jpg',
-    tajmahal: 'OIP.jpeg',
-    petra: 'GettyImages-133969533-596b51705f9b582c3574ec89.jpg',
-    machupicchu: 'machu-picchu-5.webp',
-    colosseum: 'colosseum-rome-italy-2064827.jpg',
-    chichenitza: 'El-Castillo-Chichen-Itza-Yucatan-Mexico.webp',
-    christ: 'wp1991646.jpg'
+  greatwall: 'great-wall-of-china-historic-great-wall-of-china-X7DgSZKx.jpg',
+  tajmahal: 'OIP.jpeg',
+  petra: 'GettyImages-133969533-596b51705f9b582c3574ec89.jpg',
+  machupicchu: 'machu-picchu-5.webp',
+  colosseum: 'colosseum-rome-italy-2064827.jpg',
+  chichenitza: 'El-Castillo-Chichen-Itza-Yucatan-Mexico.webp',
+  christ: 'wp1991646.jpg'
 };
 
+function runCommand() {
+  const cmd = input.value.trim().toLowerCase();
+  if (!cmd) return;
+
+  output.innerHTML += `$ ${cmd}\n`;
+
+  wonderImageContainer.innerHTML = '';
+  wonderImageContainer.style.opacity = '0';
+  wonderImageContainer.style.transform = 'scale(0.9)';
+  wonderImageContainer.style.display = 'none';
+  wonderImageContainer.style.height = '0px';
+
+  if (cmd === 'clear') {
+    output.innerHTML = '';
+  } else if (commands[cmd]) {
+    output.innerHTML += commands[cmd] + '\n\n';
+  } else if (wonders[cmd]) {
+    output.innerHTML += wonders[cmd] + '\n\n';
+    if (wonderImages[cmd]) {
+      const imgTag = `<img src="${wonderImages[cmd]}" alt="${cmd}" class="wonder-display-img">`;
+      wonderImageContainer.innerHTML = imgTag;
+      wonderImageContainer.style.display = 'flex';
+      wonderImageContainer.style.height = '300px';
+
+      setTimeout(() => {
+        wonderImageContainer.style.opacity = '1';
+        wonderImageContainer.style.transform = 'scale(1)';
+      }, 50);
+    }
+  } else {
+    output.innerHTML += `Command not found: ${cmd}\nType 'help' for list of commands.\n\n`;
+  }
+
+  input.value = '';
+  output.scrollTop = output.scrollHeight;
+}
+
 input.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-   const cmd = input.value.trim().toLowerCase();
-   output.innerHTML += `$ ${cmd}\n`;
-
-    wonderImageContainer.innerHTML = '';
-    wonderImageContainer.style.opacity = '0';
-    wonderImageContainer.style.transform = 'scale(0.9)';
-    wonderImageContainer.style.display = 'none'; 
-    wonderImageContainer.style.height = '0px'; 
-
-    if (cmd === 'clear') {
-        output.innerHTML = '';
-    }
-    else if (commands[cmd]) {
-        output.innerHTML += commands[cmd] + '\n\n';
-    }
-    else if (wonders[cmd]) {
-        output.innerHTML += wonders[cmd] + '\n\n';
-        if (wonderImages[cmd]) {
-            const imgTag = `<img src="${wonderImages[cmd]}" alt="${cmd}" class="wonder-display-img">`;
-            wonderImageContainer.innerHTML = imgTag;
-            wonderImageContainer.style.display = 'flex';
-            wonderImageContainer.style.height = '300px'; 
-            
-            setTimeout(() => {
-                wonderImageContainer.style.opacity = '1';
-                wonderImageContainer.style.transform = 'scale(1)';
-            }, 50); 
-        }
-
-    }
-    else if (cmd.length > 0) {
-      output.innerHTML += `Command not found: ${cmd}\nType 'help' for list of commands.\n\n`;
-    }
-
-    input.value = '';
-    output.scrollTop = output.scrollHeight;
+  if (e.key === 'Enter' || e.keyCode === 13) {
+    e.preventDefault();
+    runCommand();
   }
 });
+
+input.addEventListener('change', runCommand);
 
 const leftText = document.querySelector('.left-text');
 const lines = [
@@ -179,6 +181,7 @@ setInterval(() => {
   i = (i + 1) % lines.length;
 }, 4000);
 
+// --- Particles Background ---
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
