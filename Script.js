@@ -3,7 +3,7 @@ const input = document.getElementById('commandInput');
 const wonderImageContainer = document.getElementById('wonderImage');
 
 const wonders = {
-  greatwall: ` **The Great Wall of China**
+  greatwall: ` **The Great Wall of China** 
 ────────────────────────────
  *Location:* Northern China  
  *Built:* 7th century BC – 1644 AD  
